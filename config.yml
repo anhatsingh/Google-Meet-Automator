@@ -1,0 +1,22 @@
+google:
+  username: 
+  password: 
+
+meet:
+  minimum_participants_before_exiting_meet: 30
+  link_to_search_for_in_whatsapp: meet.google.com
+
+whatsapp:
+  groups_to_search_in:        
+        - 2sem, Asec, ECL-119, Elec
+        - 2Sem, Asec, CYL-197, Chem
+        - 2sem, Asec,CSL-126,python
+        - CSE Sem II (A) ENL101
+
+obs:
+  record_meetings: 1
+  location_to_obs_shortcut: C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\OBS Studio\\OBS Studio (64bit).lnk
+
+time:
+  time_in_minutes_to_search_for_messages_in_whatsapp: 15
+  time_in_seconds_to_wait_before_logout_checker_starts: 360
