@@ -35,6 +35,8 @@ class obsHandler:
             pyautogui.click(1050, 620)            
             print(str(datetime.now()) + ": OBS: recording started")
             time.sleep(1)           
+            print(str(datetime.now()) + ": OBS: going back to meet")
+            self.focusOn("Meet")
         
         if(not state):
             print(str(datetime.now()) + ": OBS: getting obs")
@@ -42,6 +44,7 @@ class obsHandler:
             time.sleep(5)
             pyautogui.click(1050, 620)
             print(str(datetime.now()) + ": OBS: recording stopped")
+            print(str(datetime.now()) + ": OBS: going back to whatsapp")
+            self.focusOn("Whatsapp")
         
-        print(str(datetime.now()) + ": OBS: going back to meet")
-        self.focusOn("Meet")
+        

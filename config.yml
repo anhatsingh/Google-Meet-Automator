@@ -1,17 +1,14 @@
 google:
-  username: 
-  password: 
+  username: 2020010001574@gndu.ac.in
+  password: $outhAsia1997
 
 meet:
-  minimum_participants_before_exiting_meet: 30
+  minimum_participants_before_exiting_meet: 3
   link_to_search_for_in_whatsapp: meet.google.com
 
 whatsapp:
   groups_to_search_in:        
-        - 2sem, Asec, ECL-119, Elec
-        - 2Sem, Asec, CYL-197, Chem
-        - 2sem, Asec,CSL-126,python
-        - CSE Sem II (A) ENL101
+        - Automation
 
 obs:
   record_meetings: 1
@@ -19,4 +16,4 @@ obs:
 
 time:
   time_in_minutes_to_search_for_messages_in_whatsapp: 15
-  time_in_seconds_to_wait_before_logout_checker_starts: 360
+  time_in_seconds_to_wait_before_logout_checker_starts: 10

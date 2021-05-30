@@ -36,19 +36,19 @@ class googleHandler:
             return 0
 
 
-    def joinMeet(self, possibleLink):
+    def joinMeet(self, link):
         print(str(datetime.now()) + ": Meet: initiating meeting")
 
-        possibleLink.click()
-        window_after = self.driver.window_handles[1]
-        self.driver.switch_to_window(window_after)
+        self.driver.execute_script('window.open("'+link+'","_blank");')   
         self.driver.implicitly_wait(100)
+        time.sleep(3)
+        self.driver.switch_to_window(self.driver.window_handles[1])     
+        time.sleep(1)
 
             
-        self.driver.find_element_by_css_selector('body').send_keys(self.keys.CONTROL + 'd')
-        print(str(datetime.now()) + ": Meet: mic turned off")
-        self.driver.find_element_by_css_selector('body').send_keys(self.keys.CONTROL + 'e')
-        print(str(datetime.now()) + ": Meet: camera turned off")
+        buttons = self.driver.find_elements_by_css_selector('.U26fgb.JRY2Pb.mUbCce.kpROve.uJNmj.QmxbVb.HNeRed.M9Bg4d')
+        buttons[0].click()
+        buttons[1].click()
 
         #time.sleep(5)
         print(str(datetime.now()) + ": Meet: joining now")
@@ -66,7 +66,7 @@ class googleHandler:
 
 
 
-    def checkForLogout(self, minParticipants, obs, wantToRecord):
+    def checkForLogout(self, minParticipants):
         count = 0
         try:
             print(str(datetime.now()) + ": Meet: logout checker initiated")
@@ -80,18 +80,13 @@ class googleHandler:
                 time.sleep(5)
             
             print(str(datetime.now()) + ": Meet: participants (" + numOfParticipants + ") less than the minimum required to attend meet (" + str(minParticipants) + ")")
-
-            if(wantToRecord):
-                obs.startOrStopRecording(0)
+            
             print(str(datetime.now()) + ": Meet: exiting meeting")
-            self.driver.close()        
-
-            window_after = self.driver.window_handles[0]
-            self.driver.switch_to_window(window_after)
+            self.driver.close()
             time.sleep(2)
+            self.driver.switch_to_window(self.driver.window_handles[0])            
 
-            print(str(datetime.now()) + ": Meet: exit successful")
-            print(str(datetime.now()) + ": Whatsapp: reinitiating link checker")
+            print(str(datetime.now()) + ": Meet: exit successful")            
 
         except:
             print(str(datetime.now()) + ": Meet: error finding number of participants (" + str(count) + ")")
@@ -99,7 +94,7 @@ class googleHandler:
             time.sleep(5)
             if(count <= 20):
                 print(str(datetime.now()) + ": Meet: reinitiating logout checker")
-                self.checkForLogout(minParticipants, obs, wantToRecord)
+                self.checkForLogout(minParticipants)
             else:
                 print(str(datetime.now()) + ": Meet: unable to initiate logout checker, contact dev")
             
