@@ -1,0 +1,51 @@
+name: Debugging
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    services:
+      db_service:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
+
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install python version
+        uses: gabrielfalcao/pyenv-action@v7
+        with:
+          default: 3.8.6
+          command: pip install -U pip  # upgrade pip after installing python
+      
+      - name: create environment
+        run: pyenv local 3.8.6 && python -mvenv .venv386
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt --upgrade pip
+             pip install pylint
+      #- name: Analysing the code with pylint
+      #  run: |
+      #    pylint `ls -R|grep .py$|xargs`
+          
+      - name: setup pyenv
+        id: pyenv_installation
+        uses: "gabrielfalcao/pyenv-action@v7"
+
+      - name: debug pyenv
+        run: echo ${{ steps.pyenv_installation.outputs.pyenv_root }}
