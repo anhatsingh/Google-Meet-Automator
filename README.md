@@ -1,52 +1,53 @@
-# GNDU-Result-Compiler
+# Google-Meet-Automator
 
-![Debug Status](https://github.com/anhatsingh/GNDU-Result-Compiler/actions/workflows/python-package2.yml/badge.svg?branch=v3)
-![Build Status](https://github.com/anhatsingh/GNDU-Result-Compiler/actions/workflows/python-package.yml/badge.svg?branch=v3)
+![Debug Status](https://github.com/anhatsingh/Google-Meet-Automator/actions/workflows/python-package.yml/badge.svg?branch=v3)
+![Build Status](https://github.com/anhatsingh/Google-Meet-Automator/actions/workflows/python-app.yml/badge.svg?branch=v3)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Downloads](https://img.shields.io/badge/download-all%20releases-brightgreen.svg)](https://github.com/anhatsingh/GNDU-Result-Compiler/releases/)
+[![Downloads](https://img.shields.io/badge/download-all%20releases-brightgreen.svg)](https://github.com/anhatsingh/Google-Meet-Automator/releases/)
 
 ## About
 
-This package uses the `Python requests Library` and `Selenium Library`
-with **Google Sheets API v4** to compile marks of students of GNDU in Google Sheets.
+This application uses the `Selenium` Library with `Whatsapp Python API`
+with **Google Meets** Integration and **OBS Record Support** to automatically join Google Meeting, Start Recording, Wait for Participants to reduce to minimum number, exit Meeting, end recording, all while giving the status through Whatsapp using `Whatsapp Python API`.
 
 ## Changelog
 Version 3.x
-1. Implements `requests` library of python instead of `Selenium` library to get the results.
-2. Uses `MultiThreading` and `Queuing` to increase the speed of getting the results.
-3. Has a Time Reduction factor of 142.2 in comparison to Version 1.x
-4. Has the option to upload to same sheet or a new Google Sheet.
+1. Implements `Whatsapp Python API` to get messages and report back to user using a single group.
+2. Has additional interactive functionality to interact with the user using whatsapp bot.
 
 Version 2.x
-1. Implements `Selenium` library with the support of `MultiThreading` to get the results.
-2. Has a better overall organisation of code in comparison to Version 1.x
-3. Has a Time Reduction Factor of 4.1 in comparison to Version 1.x
+1. Implements `Selenium` library with the support of `MultiThreading` to implement the Automation.
+2. Is entirely written again from scratch.
+3. Has multiple support libraries updated for better functionality
+4. Uses Databases to better track the messages it has seen.
+5. Implements YAML standarization to store constants for easy access.
 
 Version 1.x
-1. Implements `Selenium` library to get the Result of students Sequentially.
-2. Compiles the data into a single Google Sheet.
+1. Implements `Selenium` library to Join Meetings by getting links through multiple groups.
+2. Start OBS recording automatically
+3. End Recording automatically.
 
 The lead developer is Anhat Singh
 
-## Building / Installing Python-Auto-Attendance
+## Building / Installing Google-Meet-Automator
 
 ### Pre-Requisites
 1. Install the Python dependencies by running the following pip commands
     ```
-    pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib    
+    pip install -r requirements.txt --no-index --find-links file:///tmp/packages    
     ```
 2. Use the included `chromedriver.exe` or download the latest one from [ChromeDriver - WebDriver for Chrome](https://chromedriver.chromium.org/) and keep it in the root directory.
-3. Follow bullet 3 and 4 of Prerequisites at [Google Sheets API v4 Guide](https://developers.google.com/sheets/api/quickstart/python) to create a Google Cloud Platform Project, enable Sheets API and get the Google `credentials.json` file to be put into the root directory.
 
-## Running Python-Auto-Attendance
+## Running Google-Meet-Automator
 
 * Simple run the following command:
     ```
     py app.py
     ```
 ### How to Use
-After following all the steps given in Pre-requisites, open `app.py`, change the variables given according to your needs.
+After following all the steps given in Pre-requisites, open `config.yml`, change the constants given according to your needs.
+More coming soon.
 
 ## License
 
