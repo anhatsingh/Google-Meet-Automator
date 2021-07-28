@@ -1,4 +1,4 @@
-import time, re
+import time, re, traceback
 from datetime import datetime
 from seleniumManager.LocalStorage import LocalStorage as ls
 
@@ -19,24 +19,31 @@ class Whatsapp:
             return False
 
     def waitForLogin(self):        
-        while(self.loggedin() == False):
-            print("Not Logged in")            
+        #if(self.loggedin() == False):
+            #print("Whatsapp not Logged in")
+
+        while(self.loggedin() == False):            
             time.sleep(2)
+        print("Whatsapp Logged in")
         self.driver.implicitly_wait(100)
 
-    def getAllNames(self, returnElements = True):
-        self.waitForLogin()
-        elements = self.driver.find_elements_by_class_name("_3-8er")
-        listOfPeople = []
-        for i in elements:
-            listOfPeople.append(i.get_attribute("title"))
-        if(returnElements):
-            return elements
-        else:
-            return listOfPeople
+    def getAllNames(self, returnElements = True):        
+        try:
+            elements = self.driver.find_elements_by_class_name("_3-8er")
+            listOfPeople = []
+            for i in elements:
+                listOfPeople.append(i.get_attribute("title"))
+            if(returnElements):
+                return elements
+            else:
+                return listOfPeople
+        
+        except Exception as e:            
+            error = traceback.format_exc()
+            print(error)
+            #do error handling here later.
     
-    def getName(self, name, returnElement = True):
-        self.waitForLogin()
+    def getName(self, name, returnElement = True):        
         elements = self.getAllNames()
         for i in elements:
             if(i.get_attribute("title") == name):
@@ -53,6 +60,7 @@ class Whatsapp:
         time.sleep(sleep)
     
     def getAllMessages(self, name):
+        time.sleep(1)
         self.openConvo(name)        
         parent = self.driver.find_elements_by_class_name("_3ExzF")
 
@@ -75,8 +83,10 @@ class Whatsapp:
                 }
                 messages.append(eachMsg)
                 a+=1
-            except:
-                pass
+            except Exception as e:            
+                error = traceback.format_exc()
+                print(error)
+            #do error handling here later.
 
         return messages
         
@@ -85,11 +95,12 @@ class Whatsapp:
         self.openConvo(name)
         textarea = self.driver.find_elements_by_class_name("_2_1wd")[-1]
 
-        msg = msg.split("<br>")
+        msg = msg.split("<br>")        
         for i in msg:
             textarea.send_keys(i)
             textarea.send_keys(self.keys.SHIFT + self.keys.ENTER)
 
-        time.sleep(1)
+        self.driver.implicitly_wait(100)
+        time.sleep(1)        
         sendButton = self.driver.find_element_by_class_name("_1E0Oz")        
         sendButton.click()

@@ -11,7 +11,7 @@ class obsHandler:
         self.location = locationToObsShortcut
     
     def focusOnObs(self):
-        time.sleep(2)
+        time.sleep(5)
         obsWindow = gw.getWindowsWithTitle('OBS')[0]
         pyautogui.hotkey('win', '5')
         obsWindow.resizeTo(1095, 794)
@@ -19,16 +19,28 @@ class obsHandler:
         time.sleep(2)
     
     def focusOnMeet(self):        
-        pyautogui.hotkey('win', '7')        
+        pyautogui.hotkey('win', '8')        
 
     def openObs(self):        
         #os.startfile(self.location)
         pyautogui.hotkey('win', '5')
         time.sleep(3)
+        self.focusOnMeet()
     
     def startOrStopRecording(self, returnName=False):        
         self.focusOnObs()            
-        pyautogui.click(1050, 620)
-        self.focusOnMeet()
+        pyautogui.click(1050, 620)        
         if(returnName):
             return datetime.now()        
+    
+    def start(self, returnName = False):
+        if returnName: 
+            return self.startOrStopRecording(returnName)
+        else:
+            self.startOrStopRecording(returnName)
+    
+    def stop(self, returnName = False):
+        if returnName: 
+            return self.startOrStopRecording(returnName)
+        else:
+            self.startOrStopRecording(returnName)
