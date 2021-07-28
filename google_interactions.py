@@ -36,22 +36,19 @@ class googleHandler:
             return 0
 
 
-    def joinMeet(self, possibleLink):
-        print(str(datetime.now()) + ": Meet: initiating meeting")
-
-        possibleLink.click()
-        window_after = self.driver.window_handles[1]
-        self.driver.switch_to_window(window_after)
+    def joinMeet(self, link):
+        self.driver.execute_script('window.open("'+link+'","_blank");')   
         self.driver.implicitly_wait(100)
+        time.sleep(3)
+        self.driver.switch_to_window(self.driver.window_handles[1])     
+        time.sleep(1)
 
             
-        self.driver.find_element_by_css_selector('body').send_keys(self.keys.CONTROL + 'd')
-        print(str(datetime.now()) + ": Meet: mic turned off")
-        self.driver.find_element_by_css_selector('body').send_keys(self.keys.CONTROL + 'e')
-        print(str(datetime.now()) + ": Meet: camera turned off")
+        buttons = self.driver.find_elements_by_css_selector('.U26fgb.JRY2Pb.mUbCce.kpROve.uJNmj.QmxbVb.HNeRed.M9Bg4d')
+        buttons[0].click()
+        buttons[1].click()
 
-        #time.sleep(5)
-        print(str(datetime.now()) + ": Meet: joining now")
+        #time.sleep(5)        
         self.driver.find_element_by_css_selector('div.uArJ5e.UQuaGc.Y5sE8d.uyXBBb.xKiqt').click()        
         print(str(datetime.now()) + ": Meet: waiting to join")
 
@@ -60,46 +57,33 @@ class googleHandler:
             try:                
                 if(self.driver.find_element_by_css_selector('span.wnPUne.N0PJ8e')):
                     waitingToJoin = 0
+                    time.sleep(2)                    
                     print(str(datetime.now()) + ": Meet: joining successful")
             except:
                 print(str(datetime.now()) + ": Meet: waiting to join")
 
+    def changeMeetLayout(self):
+        self.driver.find_element_by_css_selector('.U26fgb.c7fp5b.FS4hgd.nByyte').click()
+        self.driver.find_elements_by_css_selector('.z80M1')[1].click()        
+        self.driver.find_elements_by_css_selector('.E5wxQe')[3].click()                
 
-
-    def checkForLogout(self, minParticipants, obs, wantToRecord):
+    def checkForLogout(self, minParticipants):
         count = 0
         try:
-            print(str(datetime.now()) + ": Meet: logout checker initiated")
-            time.sleep(20)
-            numOfParticipants = self.driver.find_element_by_css_selector('span.wnPUne.N0PJ8e').text
-            print(str(datetime.now()) + ": Meet: number of participants are " + numOfParticipants)
-
+            numOfParticipants = self.driver.find_element_by_css_selector('span.wnPUne.N0PJ8e').text            
             while(int(numOfParticipants) >= minParticipants):            
-                numOfParticipants = self.driver.find_element_by_css_selector('span.wnPUne.N0PJ8e').text
-                print(str(datetime.now()) + ": Meet: number of participants are " + numOfParticipants)
+                numOfParticipants = self.driver.find_element_by_css_selector('span.wnPUne.N0PJ8e').text                
                 time.sleep(5)
-            
-            print(str(datetime.now()) + ": Meet: participants (" + numOfParticipants + ") less than the minimum required to attend meet (" + str(minParticipants) + ")")
-
-            if(wantToRecord):
-                obs.startOrStopRecording(0)
-            print(str(datetime.now()) + ": Meet: exiting meeting")
-            self.driver.close()        
-
-            window_after = self.driver.window_handles[0]
-            self.driver.switch_to_window(window_after)
+                        
+            self.driver.close()
             time.sleep(2)
-
-            print(str(datetime.now()) + ": Meet: exit successful")
-            print(str(datetime.now()) + ": Whatsapp: reinitiating link checker")
+            self.driver.switch_to_window(self.driver.window_handles[0])            
 
         except:
-            print(str(datetime.now()) + ": Meet: error finding number of participants (" + str(count) + ")")
             count += 1
             time.sleep(5)
             if(count <= 20):
-                print(str(datetime.now()) + ": Meet: reinitiating logout checker")
-                self.checkForLogout(minParticipants, obs, wantToRecord)
+                self.checkForLogout(minParticipants)
             else:
                 print(str(datetime.now()) + ": Meet: unable to initiate logout checker, contact dev")
             
